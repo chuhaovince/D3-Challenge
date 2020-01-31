@@ -101,7 +101,7 @@ function renderyLabels(circleLabels, newYScale, chosenYAxis) {
 };
 
 // function used for updating circles group with new tooltip
-function updateToolTip(chosenXAxis, chosenYAxis, circleLabels) {
+function updateToolTip(chosenXAxis, chosenYAxis, circleLabels, circlesGroup) {
 
   // initialize tooltip
   var toolTip = d3.tip()
@@ -139,13 +139,18 @@ function updateToolTip(chosenXAxis, chosenYAxis, circleLabels) {
 
   circleLabels.call(toolTip);
 
+  // create mouseover and out event
   circleLabels.on("mouseover", function(data) {
-  toolTip.show(data, this);
+    toolTip.show(data, this);
+    d3.select(this)
+      .attr("stroke", "red") // highlight the selected text
   })
-  // onmouseout event
-  .on("mouseout", function(data) {
-    toolTip.hide(data);
-  });
+    // onmouseout event
+    .on("mouseout", function(data) {
+      toolTip.hide(data);
+      d3.select(this)
+        .attr("stroke", null) // de-highlight
+    });
 
   return circleLabels;
 };
@@ -252,6 +257,7 @@ d3.csv("../assets/data/data.csv").then(function(stateData, err){
     .classed("aText", true)
     .attr("dy", "1em")
     .attr("value", "smokes") // value to grab for event listener
+    .attr("outLineColor", "black")
     .classed("inactive", true)
     .text("Smokes (%)");
 
@@ -265,7 +271,7 @@ d3.csv("../assets/data/data.csv").then(function(stateData, err){
     .text("Obese (%)");
 
   // updateToolTip function above csv import
-  var circleLabels = updateToolTip(chosenXAxis, chosenYAxis, circleLabels);
+  var circleLabels = updateToolTip(chosenXAxis, chosenYAxis, circleLabels, circlesGroup);
 
   // x axis labels event listener
   xlabelsGroup.selectAll("text")
@@ -294,7 +300,7 @@ d3.csv("../assets/data/data.csv").then(function(stateData, err){
         circleLabels = renderxLabels(circleLabels, xLinearScale, chosenXAxis);
 
         // updates tooltips with new info
-        circleLabels = updateToolTip(chosenXAxis, chosenYAxis, circleLabels);
+        circleLabels = updateToolTip(chosenXAxis, chosenYAxis, circleLabels, circlesGroup);
 
         // changes classes to change bold text
         if (chosenXAxis === "poverty") {
@@ -356,7 +362,7 @@ d3.csv("../assets/data/data.csv").then(function(stateData, err){
       circleLabels = renderyLabels(circleLabels, yLinearScale, chosenYAxis);
 
       // updates tooltips with new info
-      circleLabels = updateToolTip(chosenXAxis, chosenYAxis, circleLabels);
+      circleLabels = updateToolTip(chosenXAxis, chosenYAxis, circleLabels, circlesGroup);
 
       // changes classes to change bold text
       if (chosenYAxis === "healthcare") {
