@@ -96,7 +96,7 @@ function renderyCircles(circlesGroup, newYScale, chosenYAxis) {
 function renderyLabels(circleLabels, newYScale, chosenYAxis) {
   circleLabels.transition()
     .duration(1000)
-    .attr("y", d => newYScale(d[chosenYAxis]));
+    .attr("y", d => newYScale(d[chosenYAxis])+4);
   return circleLabels;
 };
 
@@ -194,11 +194,13 @@ d3.csv("../assets/data/data.csv").then(function(stateData, err){
     .data(stateData)
     .enter()
     .append("text")
+    .text(d => d.abbr)
     .classed("aText", true)
     .attr("x", d => xLinearScale(d[chosenXAxis]))
-    .attr("y", d => yLinearScale(d[chosenYAxis]))
-    .attr("fill", "white")
-    .text(d => d.abbr)
+    .attr("y", d => yLinearScale(d[chosenYAxis])+4)
+    .attr("fill", "black")
+    
+
 
   // Create group for x- axis labels
   var xlabelsGroup = chartGroup.append("g")
@@ -282,7 +284,7 @@ d3.csv("../assets/data/data.csv").then(function(stateData, err){
         circleLabels = renderxLabels(circleLabels, xLinearScale, chosenXAxis);
 
         // updates tooltips with new info
-        circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+        circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
         // changes classes to change bold text
         if (chosenXAxis === "poverty") {
@@ -341,10 +343,10 @@ d3.csv("../assets/data/data.csv").then(function(stateData, err){
       circlesGroup = renderyCircles(circlesGroup, yLinearScale, chosenYAxis);
 
       // updates circle labels with new x values
-
       circleLabels = renderyLabels(circleLabels, yLinearScale, chosenYAxis);
-  // updates tooltips with new info
-      circlesGroup = updateToolTip(chosenYAxis, circlesGroup);
+
+      // updates tooltips with new info
+      circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
       // changes classes to change bold text
       if (chosenYAxis === "healthcare") {
