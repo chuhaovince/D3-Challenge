@@ -205,16 +205,53 @@ d3.csv("/assets/data/data.csv").then(function(stateData, err){
     .classed("inactive", true)
     .text("Obese (%)");
 
-  // Create initial scale functions
-  var xScale = d3.scaleLinear()
-              .domain([20, d3.max(stateData, d => d.hair_length)])
-              .range([0, width]);
-  
-  var ySale = d3.scaleLinear()
-              .domain([0, d3.max(statData, d => d.num_hits)])
-              .range([height, 0]);
+  // updateToolTip function above csv import
+  var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
+  // x axis labels event listener
+  labelsGroup.selectAll("text")
+    .on("click", function() {
+      // get value of selection
+      var value = d3.select(this).attr("value");
+      if (value !== chosenXAxis) {
 
+        // replaces chosenXAxis with value
+        chosenXAxis = value;
 
-})
+        // console.log(chosenXAxis)
+
+        // functions here found above csv import
+        // updates x scale for new data
+        xLinearScale = xScale(hairData, chosenXAxis);
+
+        // updates x axis with transition
+        xAxis = renderAxes(xLinearScale, xAxis);
+
+        // updates circles with new x values
+        circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
+
+        // updates tooltips with new info
+        circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+
+        // changes classes to change bold text
+        if (chosenXAxis === "num_albums") {
+          albumsLabel
+            .classed("active", true)
+            .classed("inactive", false);
+          hairLengthLabel
+            .classed("active", false)
+            .classed("inactive", true);
+        }
+        else {
+          albumsLabel
+            .classed("active", false)
+            .classed("inactive", true);
+          hairLengthLabel
+            .classed("active", true)
+            .classed("inactive", false);
+        }
+      }
+    });
+
+});
 
