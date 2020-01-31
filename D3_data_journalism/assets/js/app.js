@@ -196,18 +196,15 @@ d3.csv("../assets/data/data.csv").then(function(stateData, err){
     .attr("fill", "blue")
     .attr("opacity", ".7");
 
-  // append initial circle abbr
-  var circleLabels = chartGroup.selectAll("text")
+  // append initial circle abbr (text on circles)
+  var circleLabels = chartGroup.selectAll(".stateText")
     .data(stateData)
     .enter()
     .append("text")
-    .text(d => d.abbr)
     .classed("stateText", true)
     .attr("x", d => xLinearScale(d[chosenXAxis]))
     .attr("y", d => yLinearScale(d[chosenYAxis])+4)
-    .attr("fill", "white")
-    
-
+    .text(d => d.abbr)
 
   // Create group for x- axis labels
   var xlabelsGroup = chartGroup.append("g")
@@ -216,6 +213,7 @@ d3.csv("../assets/data/data.csv").then(function(stateData, err){
   var povertyLabel = xlabelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 20)
+    .classed("aText", true)
     .attr("value", "poverty") // value to grab for event listener
     .classed("active", true)
     .text("In Poverty (%)");
@@ -223,6 +221,7 @@ d3.csv("../assets/data/data.csv").then(function(stateData, err){
   var incomeLabel = xlabelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 40)
+    .classed("aText", true)
     .attr("value", "income") // value to grab for event listener
     .classed("inactive", true)
     .text("Household Income (Median)");
@@ -230,6 +229,7 @@ d3.csv("../assets/data/data.csv").then(function(stateData, err){
   var ageLabel = xlabelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 60)
+    .classed("aText", true)
     .attr("value", "age") // value to grab for event listener
     .classed("inactive", true)
     .text("Age (Median)");
@@ -240,6 +240,7 @@ d3.csv("../assets/data/data.csv").then(function(stateData, err){
   var healthcareLabel = ylabelsGroup.append("text")
     .attr("y", 0 - 50)
     .attr("x", 0 - (height / 2))
+    .classed("aText", true)
     .attr("dy", "1em")
     .attr("value", "healthcare") // value to grab for event listener
     .classed("active", true)
@@ -248,6 +249,7 @@ d3.csv("../assets/data/data.csv").then(function(stateData, err){
   var smokesLabel = ylabelsGroup.append("text")
     .attr("y", 0 - 70)
     .attr("x", 0 - (height / 2))
+    .classed("aText", true)
     .attr("dy", "1em")
     .attr("value", "smokes") // value to grab for event listener
     .classed("inactive", true)
@@ -256,6 +258,7 @@ d3.csv("../assets/data/data.csv").then(function(stateData, err){
   var obesityLabel = ylabelsGroup.append("text")
     .attr("y", 0 - 90)
     .attr("x", 0 - (height / 2))
+    .classed("aText", true)
     .attr("dy", "1em")
     .attr("value", "obesity") // value to grab for event listener
     .classed("inactive", true)
