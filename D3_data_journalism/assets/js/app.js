@@ -1,7 +1,9 @@
 // @TODO: YOUR CODE HERE!
+// Define svg size
 var svgWidth = 960;
 var svgHeight = 500;
 
+// Define margin parameter
 var margin = {
   top: 50,
   right: 50,
@@ -9,6 +11,7 @@ var margin = {
   left: 50
 };
 
+// Define chart size
 var width = svgWidth - margin.left - margin.right;
 var height = svgHeight - margin.top - margin.bottom;
 
