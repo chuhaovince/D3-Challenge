@@ -202,7 +202,7 @@ d3.csv("../assets/data/data.csv").then(function(stateData, err){
     .enter()
     .append("text")
     .text(d => d.abbr)
-    .classed("aText", true)
+    .classed("stateText", true)
     .attr("x", d => xLinearScale(d[chosenXAxis]))
     .attr("y", d => yLinearScale(d[chosenYAxis])+4)
     .attr("fill", "white")
