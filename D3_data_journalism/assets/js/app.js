@@ -1,7 +1,7 @@
 // @TODO: YOUR CODE HERE!
 // Define svg size
-var svgWidth = 960;
-var svgHeight = 650;
+var svgWidth = $(".row").width(); // use jquery to get the width of the element
+var svgHeight = 700;
 
 // Define margin parameter
 var margin = {
@@ -10,6 +10,8 @@ var margin = {
   bottom: 100,
   left: 100
 };
+
+console.log($(".container").height())
 
 // Define chart size
 var width = svgWidth - margin.left - margin.right;
@@ -33,7 +35,7 @@ function xScale(stateData, chosenXAxis) {
   // create scales
   var xLinearScale = d3.scaleLinear()
     .domain([d3.min(stateData, d => d[chosenXAxis]) * 0.8,
-      d3.max(stateData, d => d[chosenXAxis]) * 1.2])
+      d3.max(stateData, d => d[chosenXAxis]) * 1.05])
     .range([0, width]);
   return xLinearScale;
 };
@@ -43,7 +45,7 @@ function yScale(stateData, chosenYAxis) {
   // create scales
   var yLinearScale = d3.scaleLinear()
     .domain([d3.min(stateData, d => d[chosenYAxis]) * 0.8,
-      d3.max(stateData, d => d[chosenYAxis]) * 1.2])
+      d3.max(stateData, d => d[chosenYAxis]) * 1.05])
     .range([height, 0]);
   return yLinearScale;
 };
